@@ -2,13 +2,12 @@ package backEnd;
 
 public class backEndTicTacToe {
     public static int[] occupied = {10, 10, 10, 10, 10, 10, 10, 10, 10};
-    static char[][] board = {
+    private static char[][] playingBoard = {
             {' ', ' ', ' '}, 
             {' ', ' ', ' '}, 
             {' ', ' ', ' '}
         };
-    static char[][] playingBoard;
-    static int turn;
+    static int turn, selection;
 	public static int dice(int max, int min) {
         if (max<min) {
             return 0;
@@ -61,32 +60,34 @@ public class backEndTicTacToe {
         return 'N';
     }
     
-    public static void init(int userStart) {
+    public void init(int userStart) {
         System.out.println("Tic Tac Toe Started");
         turn = 0;
-        if (userStart==1) {
-        	playingBoard = board;
-        } else if (userStart==2) {
+        selection = 1;
+        boardReset();
+        if (userStart==2) {
             computer.setChosen(occupied);
             System.out.println(computer.levelZero());
-        } else if (userStart==0) {
-        	
         }
     }
     
-    private static boolean gamePlay(char player) {
-    	// use static char[][] playingboard to add moves
-    	if (isWon(board)=='X'||isWon(board)=='O') {
-            return true;
+    private void boardReset() {
+        for (char[] rows:playingBoard) {
+            for (int unit = 0; unit<rows.length; unit++) {
+                rows[unit]=' ';
+            }
         }
-        turn++;
-        
-        if (isWon(board)=='X'||isWon(board)=='O') {
-            return true;
-        }
-        return false;
     }
-    public static boolean toArr(int userPick, char XO) {
+    
+    public char select() {
+    	selection++;
+    	if (selection%2 == 0) {
+    		return 'X';
+    	} else {
+    		return 'O';
+    	}
+    }
+    public boolean toArr(int userPick, char XO) {
         occupied[turn] = userPick;
     	if (userPick<=3) {
         	playingBoard[0][userPick-1] = XO;
@@ -101,7 +102,7 @@ public class backEndTicTacToe {
     		}
     		System.out.print("\n");
     	}
-    	if (isWon(board)=='X'||isWon(board)=='O') {
+    	if (isWon(playingBoard)=='X'||isWon(playingBoard)=='O') {
     		return false;
     	}
     	return true;

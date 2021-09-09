@@ -48,7 +48,7 @@ public class frontEndTicTacToe implements ActionListener{
 		exit,
 		comp;
 	private static ImageIcon logo;
-	private static char XorO; // get from backend 
+	private static char XorO;
 	private static HashMap<JButton, Integer[]> buttons;
 	private static int side = 50;
 	private static int[] rows = {80, 140, 200}, columns = {10, 70, 130}; //rows: vertical, columns: horizontal

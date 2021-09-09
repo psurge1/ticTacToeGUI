@@ -63,7 +63,6 @@ public class frontEndTicTacToe implements ActionListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
 		
-		// logo
 		logo = new ImageIcon(frontEndTicTacToe.class.getResource("logo2.png"));
 		frame.setIconImage(logo.getImage());
 		
@@ -81,12 +80,10 @@ public class frontEndTicTacToe implements ActionListener{
 		turn.setBounds(10, 40, 80, 25);
 		panel.add(turn);
 		
-		//startup image
-		
 		menu();
 		
 		frame.setVisible(true);
-		//frame.setResizable(false);
+		frame.setResizable(false);
 	}
 	
 	@Override
@@ -101,7 +98,6 @@ public class frontEndTicTacToe implements ActionListener{
 			tttBE.init(3);
 			frame.dispose();
 		} else if (genericButton==comp) {
-			// computer
 			winner.setText("");
 			tttBE.init(2);
 			buttonInit();
@@ -120,7 +116,6 @@ public class frontEndTicTacToe implements ActionListener{
 			}
 		}
 	}
-	// private static void buttonsRecall(ActionEvent, JButton) {}
 	
 	private static void buttonInit() {
 		// buttons

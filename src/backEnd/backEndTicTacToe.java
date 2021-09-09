@@ -60,9 +60,7 @@ public class backEndTicTacToe {
         for (vColumn=0; vColumn<playBoard.length; vColumn++) {
             for (int vRow=0; vRow<playBoard[vColumn].length; vRow++) {
                 alignment[vRow] = playBoard[vRow][vColumn];
-                System.out.println(vColumn + " : " + vRow + " : " + alignment[vRow]);
             }
-            System.out.println();
             if (isIdentical(alignment)) {
                 return alignment[0];
             }
@@ -107,6 +105,7 @@ public class backEndTicTacToe {
         	playingBoard[2][userPick-7] = XO;
         }
     	printBoard(playingBoard);
+    	System.out.println();
     	
     	var pl = isWon(playingBoard);
     	

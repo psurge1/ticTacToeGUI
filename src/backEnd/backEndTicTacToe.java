@@ -1,5 +1,7 @@
 package backEnd;
 
+import java.util.Arrays;
+
 public class backEndTicTacToe {
     public static int[] occupied = {10, 10, 10, 10, 10, 10, 10, 10, 10};
     private static char[][] playingBoard = {
@@ -17,42 +19,50 @@ public class backEndTicTacToe {
 	}
     private static boolean isIdentical(char[] arrChar) {
         for (int arrPosition=1; arrPosition<arrChar.length; arrPosition++) {
-            if (arrChar[arrPosition] != arrChar[arrPosition-1]) {
-		        return false;
-            }
+        	if (arrChar[arrPosition] == 'X' || arrChar[arrPosition] == 'O') {
+	            if (arrChar[arrPosition] != arrChar[arrPosition-1]) {
+			        return false;
+	            }
+        	} else {
+        		return false;
+        	}
         }
         return true;
     }
     private static char isWon(char[][] playBoard) {
         // check if there is a horizontal victory
-        int row;
-        for (row=0; row<playBoard.length; row++) {
-            if (isIdentical(playBoard[row])) {
-                return playBoard[row][0];
+        int vColumn;
+        for (vColumn=0; vColumn<playBoard.length; vColumn++) {
+            if (isIdentical(playBoard[vColumn])) {
+                return playBoard[vColumn][0];
             }
         }
 
         // check if there is a diagonal victory
         char[] alignment = new char[3];
-        for (row=0; row<playBoard.length; row++) {
-            alignment[row] = playBoard[row][row];
+        for (vColumn=0; vColumn<playBoard.length; vColumn++) {
+            alignment[vColumn] = playBoard[vColumn][vColumn];
         }
         if (isIdentical(alignment)) {
             return alignment[0];
         }
-
-        for (row=0; row<playBoard.length; row++) {
-            alignment[row] = playBoard[row][(playBoard.length-1)-row];
+        
+        Arrays.fill(alignment, ' ');
+        for (vColumn=0; vColumn<playBoard.length; vColumn++) {
+            alignment[vColumn] = playBoard[vColumn][(playBoard.length-1)-vColumn];
         }
         if (isIdentical(alignment)) {
             return alignment[0];
         }
 
         // check if there is a vertical victory
-        for (row=0; row<playBoard.length; row++) {
-            for (int rowUnit=0; rowUnit<playBoard[row].length; rowUnit++) {
-                alignment[rowUnit] = playBoard[rowUnit][row];
+        Arrays.fill(alignment, ' ');
+        for (vColumn=0; vColumn<playBoard.length; vColumn++) {
+            for (int vRow=0; vRow<playBoard[vColumn].length; vRow++) {
+                alignment[vRow] = playBoard[vRow][vColumn];
+                System.out.println(vColumn + " : " + vRow + " : " + alignment[vRow]);
             }
+            System.out.println();
             if (isIdentical(alignment)) {
                 return alignment[0];
             }
@@ -96,15 +106,22 @@ public class backEndTicTacToe {
         } else {
         	playingBoard[2][userPick-7] = XO;
         }
-    	for (char[] carr:playingBoard) {
+    	printBoard(playingBoard);
+    	
+    	var pl = isWon(playingBoard);
+    	
+    	if (pl =='X' || pl =='O') {
+    		return false;
+    	}
+    	return true;
+    }
+    
+    private static void printBoard(char[][] twoDArr) {
+    	for (char[] carr:twoDArr) {
     		for (char c:carr) {
     			System.out.print(c);
     		}
     		System.out.print("\n");
     	}
-    	if (isWon(playingBoard)=='X'||isWon(playingBoard)=='O') {
-    		return false;
-    	}
-    	return true;
     }
 }

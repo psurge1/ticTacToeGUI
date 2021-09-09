@@ -93,6 +93,7 @@ public class frontEndTicTacToe implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		JButton genericButton = (JButton) e.getSource();
 		if (genericButton==play) {
+			winner.setText("X:");
 			tttBE.init(1);
 			buttonInit();
 			frame.setSize(203, 300);
@@ -101,11 +102,17 @@ public class frontEndTicTacToe implements ActionListener{
 			frame.dispose();
 		} else if (genericButton==comp) {
 			// computer
+			winner.setText("");
 			tttBE.init(2);
 			buttonInit();
 			frame.setSize(203, 300);
 		} else if (buttons.containsKey(genericButton)){
 			XorO = tttBE.select();
+			if (XorO == 'X') {
+				winner.setText("O:");
+			} else if (XorO == 'O') {
+				winner.setText("X:");
+			}
 			placement = onClicked(genericButton);
 			if (!tttBE.toArr(placement, XorO)) {
 				winner.setText("Winner is " + XorO + "!");

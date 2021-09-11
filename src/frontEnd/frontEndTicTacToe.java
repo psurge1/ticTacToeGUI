@@ -63,7 +63,7 @@ public class frontEndTicTacToe implements ActionListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
 		
-		logo = new ImageIcon(frontEndTicTacToe.class.getResource("logo2.png"));
+		logo = new ImageIcon(frontEndTicTacToe.class.getResource("logo1.png"));
 		frame.setIconImage(logo.getImage());
 		
 		panel.setLayout(null);

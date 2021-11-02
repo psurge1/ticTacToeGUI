@@ -80,6 +80,8 @@ public class frontEndTicTacToe implements ActionListener{
 		turn.setBounds(10, 40, 80, 25);
 		panel.add(turn);
 		
+		//startup image
+		
 		menu();
 		
 		frame.setVisible(true);
@@ -98,6 +100,7 @@ public class frontEndTicTacToe implements ActionListener{
 			tttBE.init(3);
 			frame.dispose();
 		} else if (genericButton==comp) {
+			// computer
 			winner.setText("");
 			tttBE.init(2);
 			buttonInit();
@@ -110,8 +113,12 @@ public class frontEndTicTacToe implements ActionListener{
 				winner.setText("X:");
 			}
 			placement = onClicked(genericButton);
-			if (!tttBE.toArr(placement, XorO)) {
+			char gameChar = tttBE.toArr(placement, XorO);
+			if (gameChar=='X' || gameChar=='O') {
 				winner.setText("Winner is " + XorO + "!");
+				onFinish();
+			} else if (gameChar=='N') {
+				winner.setText("Nobody won!");
 				onFinish();
 			}
 		}

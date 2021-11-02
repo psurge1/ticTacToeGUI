@@ -95,8 +95,10 @@ public class backEndTicTacToe {
     		return 'O';
     	}
     }
-    public boolean toArr(int userPick, char XO) {
+    public char toArr(int userPick, char XO) {
         occupied[turn] = userPick;
+        System.out.println(turn);
+        turn++;
     	if (userPick<=3) {
         	playingBoard[0][userPick-1] = XO;
         } else if (userPick<=6) {
@@ -109,10 +111,10 @@ public class backEndTicTacToe {
     	
     	var pl = isWon(playingBoard);
     	
-    	if (pl =='X' || pl =='O') {
-    		return false;
+    	if (pl=='X' || pl=='O' || turn==9) {
+    		return pl;
     	}
-    	return true;
+    	return 'Z';
     }
     
     private static void printBoard(char[][] twoDArr) {

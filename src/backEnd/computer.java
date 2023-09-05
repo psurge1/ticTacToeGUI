@@ -1,13 +1,16 @@
 package backEnd;
 
-public class computer {
+public class Computer {
 	static int[] chosen;
 	static int max = 10;
 	static int min = 1;
-	protected static void setChosen(int[] arr) {
+	public static void setChosen(int[] arr) {
 		chosen = arr;
 	}
-	protected static int levelZero() {
+	public static int[] getChosen() {
+		return chosen;
+	}
+	public static int random() {
         while (true) {
             int compGuess = (int) (Math.random()*(max-min)+min);
             if (!in(compGuess, chosen)) {
@@ -15,15 +18,8 @@ public class computer {
             }
         }
 	}
-	protected static int levelOne() {
-		//TODO complete level one function
-		return 0;
-	}
-	protected static int levelTwo() {
-		//TODO complete level two function
-		return 0;
-	}
-	protected static boolean in(int n, int[] array) {
+
+	public static boolean in(int n, int[] array) {
     	for (int number:array) {
     		if (number == n) {
     			return true;

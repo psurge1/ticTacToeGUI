@@ -5,10 +5,11 @@ import java.util.*;
 import java.awt.event.*;
 
 import backEnd.backEndTicTacToe;
+import backEnd.Computer;
 
 public class frontEndTicTacToe implements ActionListener{
 	static backEndTicTacToe tttBE;
-	public static boolean won;
+	public static boolean won, computerPlaying = false;
 	private static JFrame frame;
 	private static JPanel panel;
 	private static JLabel label, 
@@ -92,33 +93,50 @@ public class frontEndTicTacToe implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		JButton genericButton = (JButton) e.getSource();
 		if (genericButton==play) {
+			clean();
 			winner.setText("X:");
-			tttBE.init(1);
+			tttBE.init();
 			buttonInit();
 			frame.setSize(203, 300);
+			computerPlaying = false;
 		} else if (genericButton==exit) {
-			tttBE.init(3);
+			tttBE.init();
 			frame.dispose();
 		} else if (genericButton==comp) {
 			// computer
+			clean();
 			winner.setText("");
-			tttBE.init(2);
+			tttBE.init();
 			buttonInit();
 			frame.setSize(203, 300);
+			computerPlaying = true;
 		} else if (buttons.containsKey(genericButton)){
 			XorO = tttBE.select();
+			if (computerPlaying && XorO == 'X') {
+				int selection = Computer.random();
+				placement = onClicked(selection);
+			}
+			else {
+				placement = onClicked(genericButton);
+			}
+
 			if (XorO == 'X') {
 				winner.setText("O:");
 			} else if (XorO == 'O') {
 				winner.setText("X:");
 			}
-			placement = onClicked(genericButton);
+			
+			// check if game has been won or tied
 			char gameChar = tttBE.toArr(placement, XorO);
-			if (gameChar=='X' || gameChar=='O') {
-				winner.setText("Winner is " + XorO + "!");
-				onFinish();
-			} else if (gameChar=='N') {
-				winner.setText("Nobody won!");
+			if (gameChar=='X' || gameChar=='O' || gameChar=='N') {
+				if (gameChar=='N') {
+					winner.setText("Nobody won!");
+				}
+				else
+				{
+					winner.setText("Winner is " + XorO + "!");
+				}
+
 				onFinish();
 			}
 		}
@@ -191,6 +209,20 @@ public class frontEndTicTacToe implements ActionListener{
 		panel.add(labelToBeDisplayed);
 		return clickedPosition;
 	}
+
+	private static int onClicked(int clickedPosition) {
+		// TODO: Optimize Code
+		Integer[][] values = buttons.values().toArray(new Integer[0][]);
+		JButton[] keys = buttons.keySet().toArray(new JButton[0]);
+		JButton clickedButton = keys[0];
+		for (int k = 0; k < values.length; ++k) {
+			if (clickedPosition == values[k][0])
+			{
+				clickedButton = keys[k];
+			}
+		}
+		return onClicked(clickedButton);
+	}
 	
 	public static void menu() {
 		int baseHeight = 285;
@@ -213,12 +245,16 @@ public class frontEndTicTacToe implements ActionListener{
 		comp.addActionListener(new frontEndTicTacToe());
 		panel.add(comp);
 	}
-	
+
+
 	private static void onFinish() {
 		frame.setSize(203, 400);
 		for (JButton l:buttons.keySet()) {
 			l.setVisible(false);
 		}
+	}
+
+	private static void clean() {
 		for (JLabel clickedPlace:positionLabels) {
 			panel.remove(clickedPlace);
 		}

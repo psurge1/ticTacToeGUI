@@ -68,15 +68,11 @@ public class backEndTicTacToe {
         return 'N';
     }
     
-    public void init(int userStart) {
+    public void init() {
         System.out.println("Tic Tac Toe Started");
         turn = 0;
         selection = 1;
         boardReset();
-        if (userStart==2) {
-            computer.setChosen(occupied);
-            System.out.println(computer.levelZero());
-        }
     }
     
     private void boardReset() {
@@ -95,8 +91,10 @@ public class backEndTicTacToe {
     		return 'O';
     	}
     }
+
     public char toArr(int userPick, char XO) {
         occupied[turn] = userPick;
+        Computer.setChosen(occupied);
         System.out.println(turn);
         turn++;
     	if (userPick<=3) {
@@ -117,6 +115,7 @@ public class backEndTicTacToe {
     	return 'Z';
     }
     
+    // debugging tool
     private static void printBoard(char[][] twoDArr) {
     	for (char[] carr:twoDArr) {
     		for (char c:carr) {
